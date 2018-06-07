@@ -18,7 +18,9 @@ public class Recognition01_main {
 
 
 		VisualRecognition service = new VisualRecognition("2018-03-19");
-		service.setApiKey("j16003");
+		service.setApiKey("J16003");
+
+		MySQL mysql = new MySQL();
 
 		DetectFacesOptions detectFacesOptions = null;
 		try {
@@ -42,10 +44,12 @@ public class Recognition01_main {
 			System.out.println("age_max : " + age_max);
 			double age_score = node.get("images").get(0).get("faces").get(0).get("age").get("score").asDouble();
 			System.out.println("age_score : " + age_score);
-			String gender = node.get("images").get(0).get("faces").get(0).get("gender").get("gender").toString();
+			int gender = node.get("images").get(0).get("faces").get(0).get("gender").get("gender").asInt();
 			System.out.println("Gender : " + gender);
 			double gender_score = node.get("images").get(0).get("faces").get(0).get("gender").get("score").asDouble();
 			System.out.println("Gender_score : " + gender_score);
+
+			mysql.updateImage(age_min,age_max,age_score,gender,gender_score);
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
